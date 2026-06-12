@@ -12,6 +12,7 @@ class RobotController:
         self.thread = None
         self.FRAME_CENTER_X = 160 #320
         self.speed = 5
+        self.manual_speed = 8
         self.kp = 1
         self.kd = 0.0
         self.previous_error = 0
@@ -61,13 +62,13 @@ class RobotController:
             return
         
         if (command == "FORWARD"):
-            send_serial_command(f"L:{self.speed} R:{self.speed}")
+            send_serial_command(f"L:{self.manual_speed} R:{self.manual_speed}")
         elif (command == "BACKWARD"):
-            send_serial_command(f"L:-{self.speed} R:-{self.speed}")
+            send_serial_command(f"L:-{self.manual_speed} R:-{self.manual_speed}")
         elif (command == "RIGHT"):
-            send_serial_command(f"L:{self.speed} R:-{self.speed}")  
+            send_serial_command(f"L:{self.manual_speed} R:-{self.manual_speed}")  
         elif (command == "LEFT"):
-            send_serial_command(f"L:-{self.speed} R:{self.speed}")
+            send_serial_command(f"L:-{self.manual_speed} R:{self.manual_speed}")
         elif (command == "STOP"):
             send_serial_command("L:0 R:0")
 

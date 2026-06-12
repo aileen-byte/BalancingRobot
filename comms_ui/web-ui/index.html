@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sir BalanceAlot Dashboard</title>
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <link rel="stylesheet" href="style.css?build=32">
+</head>
+<body>
+  <div class="dashboard">
+    <header class="topbar">
+      <div class="title-block">
+        <h1>Sir BalanceAlot Dashboard</h1>
+        <p id="status" class="connected-dot">Connected</p>
+      </div>
+
+      <div class="telemetry-bar">
+        <div class="telemetry-item angle">
+          <span class="telemetry-label">Angle</span>
+          <span class="telemetry-value"><span id="angle">--</span>°</span>
+        </div>
+
+        <div class="telemetry-item gyro">
+          <span class="telemetry-label">Gyro</span>
+          <span class="telemetry-value"><span id="gyro">--</span>°/s</span>
+        </div>
+
+        <div class="telemetry-item motor-left">
+          <span class="telemetry-label">Left Motor</span>
+          <span class="telemetry-value" id="left">--</span>
+        </div>
+
+        <div class="telemetry-item motor-right">
+          <span class="telemetry-label">Right Motor</span>
+          <span class="telemetry-value" id="right">--</span>
+        </div>
+
+        <div class="telemetry-item battery">
+          <span class="telemetry-label">Battery</span>
+          <span class="telemetry-value"><span id="battery">--</span> V</span>
+        </div>
+
+        <div class="telemetry-item mode">
+          <span class="telemetry-label">Mode</span>
+          <span class="telemetry-value" id="mode">--</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-grid">
+      <section class="camera-section">
+        <h2>Robot Camera Feed</h2>
+        <div class="camera-box">
+          <img id="camera-feed" src="/camera-feed" alt="Live robot camera feed">
+        </div>
+        <p class="camera-note">Showing the robot's forward-facing camera view.</p>
+      </section>
+
+      <section class="controls-panel">
+        <h2>Manual Controls</h2>
+
+        <div class="system-controls">
+          <div class="control-option">
+            <button onclick="sendMode('manual')">
+              <span class="btn-title">Manual</span>
+            </button>
+            <span class="btn-desc">Enable manual control</span>
+          </div>
+
+          <div class="control-option">
+            <button onclick="sendMode('line_follow')">
+              <span class="btn-title">Line Follow</span>
+            </button>
+            <span class="btn-desc">Enable line following</span>
+          </div>
+
+          <div class="control-option">
+            <button class="estop" onclick="sendCommand('ESTOP')">
+              <span class="btn-title">Emergency Stop</span>
+            </button>
+            <span class="btn-desc">Disable motors immediately</span>
+          </div>
+        </div>
+
+        <div class="gamepad">
+          <button class="control-btn forward" title="Move forward"
+            onmousedown="sendCommand('FORWARD')" onmouseup="sendCommand('STOP')">
+            ▲
+          </button>
+
+          <button class="control-btn turn-left" title="Turn left"
+            onmousedown="sendCommand('LEFT')" onmouseup="sendCommand('STOP')">
+            ↶
+          </button>
+
+          <button class="control-btn stop" onclick="sendCommand('STOP')">
+            Stop
+          </button>
+
+          <button class="control-btn turn-right" title="Turn right"
+            onmousedown="sendCommand('RIGHT')" onmouseup="sendCommand('STOP')">
+            ↷
+          </button>
+
+          <button class="control-btn backward" title="Move backward"
+            onmousedown="sendCommand('BACKWARD')" onmouseup="sendCommand('STOP')">
+            ▼
+          </button>
+        </div>
+      </section>
+
+      <section class="event-panel">
+        <div class="event-title-row">
+          <div class="event-heading">
+            <h2>Event Log</h2>
+            <span id="active-package-count" class="event-count">0 active</span>
+          </div>
+        </div>
+        <div id="event-list"></div>
+        <div id="no-events" class="no-events">No package drop detected.</div>
+      </section>
+    </main>
+
+    <section class="tuning-panel">
+      <h2>Live Tuning</h2>
+
+      <div class="tuning-grid">
+
+        <div class="tuning-field">
+          <label for="tune-balance-kp">Balance KP</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-balance-kp-slider" min="0" max="1500" step="50" value="900">
+            <input class="tuning-number" type="number" id="tune-balance-kp" min="0" max="1500" step="50" value="900">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-balance-kd">Balance KD</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-balance-kd-slider" min="0" max="100" step="5" value="20">
+            <input class="tuning-number" type="number" id="tune-balance-kd" min="0" max="100" step="5" value="20">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-speed-kp">Speed KP</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-speed-kp-slider" min="0" max="1500" step="1" value="7.5">
+            <input class="tuning-number" type="number" id="tune-speed-kp" min="0" max="1500" step="1" value="7.5">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-speed-ki">Speed KI</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-speed-ki-slider" min="0" max="0.5" step="0.001" value="0.0001">
+            <input class="tuning-number" type="number" id="tune-speed-ki" min="0" max="0.5" step="0.001" value="0.0001">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-speed-kd">Speed KD</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-speed-kd-slider" min="0" max="100" step="0.1" value="0.1">
+            <input class="tuning-number" type="number" id="tune-speed-kd" min="0" max="100" step="0.1" value="0.1">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-speed">Speed</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-speed-slider" min="0" max="30" step="0.1" value="5">
+            <input class="tuning-number" type="number" id="tune-speed" min="0" max="30" step="0.1" value="5">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-auto-kp">Auto KP</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-auto-kp-slider" min="0" max="2" step="0.01" value="1">
+            <input class="tuning-number" type="number" id="tune-auto-kp" min="0" max="2" step="0.01" value="1">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-auto-ki">Auto KI</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-auto-ki-slider" min="0" max="0.5" step="0.001" value="0">
+            <input class="tuning-number" type="number" id="tune-auto-ki" min="0" max="0.5" step="0.001" value="0">
+          </div>
+        </div>
+
+        <div class="tuning-field">
+          <label for="tune-auto-kd">Auto KD</label>
+          <div class="tuning-control">
+            <input class="tuning-slider" type="range" id="tune-auto-kd-slider" min="0" max="1" step="0.01" value="0">
+            <input class="tuning-number" type="number" id="tune-auto-kd" min="0" max="1" step="0.01" value="0">
+          </div>
+        </div>
+
+      </div>
+
+      <button class="update-tuning-btn" onclick="sendTuningUpdate()">
+        Update tuning values
+      </button>
+    </section>
+
+  </div>
+  <script src="app.js?build=32"></script>
+</body>
+</html>

@@ -1,0 +1,457 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+  color: #111;
+}
+
+.dashboard {
+  min-height: 100vh;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Top bar */
+
+.topbar {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.title-block {
+  background: white;
+  padding: 16px 20px;
+  border-radius: 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 28px;
+}
+
+h2 {
+  margin: 0 0 14px 0;
+  font-size: 24px;
+}
+
+#status {
+  margin: 0;
+  font-weight: bold;
+}
+
+.connected-dot::before {
+  content: "● ";
+  color: #16a34a;
+}
+
+/* Telemetry bar */
+
+.telemetry-bar {
+  background: white;
+  border-radius: 18px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.telemetry-item {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 12px 14px;
+  border-left: 4px solid #ddd;
+}
+
+.telemetry-label {
+  display: block;
+  font-size: 13px;
+  opacity: 0.75;
+  margin-bottom: 5px;
+}
+
+.telemetry-value {
+  display: inline;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.angle {
+  border-left-color: #ffb668;
+}
+
+.gyro {
+  border-left-color: #cca0f3;
+}
+
+.motor-left {
+  border-left-color: #ffe416;
+}
+
+.motor-right {
+  border-left-color: #64c5ee;
+}
+
+.battery {
+  border-left-color: #a5f66b;
+}
+
+.mode {
+  border-left-color: #fd8bec;
+}
+
+/* Main layout */
+
+.main-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr 0.9fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.camera-section,
+.controls-panel,
+.event-panel {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  min-height: 0;
+  height: calc(100vh - 210px);
+}
+
+/* Camera */
+
+.camera-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.camera-box {
+  flex: 1;
+  min-height: 0;
+  background: #111;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-note {
+  margin: 10px 0 0 0;
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+/* Controls */
+
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls-panel h2 {
+  align-self: flex-start;
+}
+
+.system-controls {
+  margin: 4px 0 34px 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.control-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+}
+
+.system-controls button,
+.control-btn {
+  border: none;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.system-controls button:hover,
+.control-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+}
+
+.system-controls button {
+  width: 130px;
+  height: 74px;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-title {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-desc {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.estop {
+  background: white !important;
+  color: #dc2626 !important;
+  border: 2px solid #dc2626 !important;
+}
+
+.estop:hover {
+  background: #fef2f2 !important;
+}
+
+/* Gamepad */
+
+.gamepad {
+  display: grid;
+  grid-template-columns: 92px 92px 92px;
+  grid-template-rows: 72px 72px 72px;
+  gap: 14px;
+}
+
+.control-btn {
+  width: 92px;
+  height: 72px;
+  font-size: 28px;
+}
+
+.forward {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.turn-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.stop {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 16px;
+  background: #222;
+  color: white;
+}
+
+.turn-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.backward {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+/* Event panel */
+
+.event-panel {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-title-row {
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.event-title-row h2 {
+  margin: 0;
+}
+
+.event-heading,
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.event-heading h2 {
+  margin: 0;
+}
+
+.section-icon {
+  font-size: 24px;
+}
+
+.event-count {
+  background: #eef2ff;
+  color: #4f46e5;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+#event-list {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.event-card {
+  color: #111;
+  padding: 14px;
+  border-radius: 14px;
+  transition: background 0.3s ease, border-left-color 0.3s ease;
+}
+
+.event-card-main {
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.event-icon {
+  font-size: 26px;
+}
+
+.event-title {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.event-detail {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* Event colours */
+
+.event-green {
+  background: #ecfdf5;
+  border-left: 6px solid #22c55e;
+}
+
+.event-orange {
+  background: #fff7ed;
+  border-left: 6px solid #f97316;
+}
+
+.event-red {
+  background: #fef2f2;
+  border-left: 6px solid #ef4444;
+}
+
+.event-green .event-icon {
+  color: #22c55e;
+}
+
+.event-orange .event-icon {
+  color: #f97316;
+}
+
+.event-red .event-icon {
+  color: #ef4444;
+}
+
+/* Event buttons */
+
+.clear-event-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #111;
+  color: white;
+  font-weight: bold;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.clear-event-btn:hover {
+  transform: scale(1.05);
+  background: #333;
+}
+
+/* Utility */
+
+.no-events {
+  opacity: 0.65;
+  font-size: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Live Tuning Panel */
+.tuning-panel {
+    background: white;
+    border-radius: 18px;
+    padding: 22px 26px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.tuning-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.update-tuning-btn {
+    margin-top: 20px;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 14px;
+    background: #111;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tuning-control {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 12px;
+  align-items: center;
+}
+
+.tuning-slider {
+  width: 100%;
+  cursor: pointer;
+}
+
+.tuning-number {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
